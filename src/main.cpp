@@ -38,7 +38,7 @@ void setup() {
     /* servo */
     ps4operation::Servo * servoOperation = new ps4operation::Servo(servo);
     ps4Controller.addOperation(servoOperation);
-    servoOperation->attach(23);
+    servo.attach(23);
     Serial.println(F("start"));
 }
 
