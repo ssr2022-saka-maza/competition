@@ -29,8 +29,14 @@ namespace ps4operation {
          */
         ssr::SyncServo & _syncServo;
 
+        /**
+         * @brief とれる角度の最小値
+         */
         const uint8_t _minAngle;
 
+        /**
+         * @brief とれる角度の最大値
+         */
         const uint8_t _maxAngle;
 
         /**
