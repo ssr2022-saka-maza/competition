@@ -10,7 +10,7 @@
 #ifndef PS4_OPERATION_FORK_LIFT_HPP
 
 /**
- * @brief ps4/ForkLift.hppがインクルードされていることを示すdefine
+ * @brief ps4operation/ForkLift.hppがインクルードされていることを示すdefine
  */
 #define PS4_OPERATION_FORK_LIFT_HPP
 
@@ -18,6 +18,9 @@
 #include <ssr/PS4Value.hpp>
 #include <ssr/PS4Operation.hpp>
 
+/**
+ * @brief ssr::PS4Operationを継承したクラス群
+ */
 namespace ps4operation {
     /**
      * @brief 昇降機構を扱うOperation
@@ -35,6 +38,10 @@ namespace ps4operation {
         float _angle;
 
     public:
+        /**
+         * @brief Construct a new Fork Lift object
+         * @param syncServo 制御する同期サーボ
+         */
         explicit ForkLift(ssr::SyncServo & syncServo);
 
         // デフォルトコンストラクタ、コピーを禁止
@@ -42,6 +49,10 @@ namespace ps4operation {
         ForkLift(const ForkLift &) = delete;
         ForkLift & operator=(const ForkLift &) = delete;
 
+        /**
+         * @brief 初期化処理 全体のsetup()内で呼び出すこと
+         * @param angle 最初の角度
+         */
         void begin(uint8_t angle = 0);
 
         /**
