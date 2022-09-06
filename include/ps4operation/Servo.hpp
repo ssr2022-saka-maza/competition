@@ -10,10 +10,7 @@
 #ifndef PS4_OPERATION_SERVO_HPP
 
 /**
- * @file Servo.hpp
- * @author H1rono (hronok66@gmail.com)
  * @brief ps4operation/Servo.hppがインクルードされていることを示すdefine
- * @copyright Copyright (c) 2022
  */
 #define PS4_OPERATION_SERVO_HPP
 
@@ -55,8 +52,9 @@ namespace ps4operation {
         Servo & operator=(const Servo &) = delete;
 
         /**
-         * @brief
+         * @brief コントローラーのセンサー値でサーボモーターを制御
          * @param value コントローラーのセンサー値
+         * @details L2ボタンで角度減少、R2ボタンで角度増加
          */
         virtual void operate(const ssr::PS4Value & value) override;
     }; // class Servo
