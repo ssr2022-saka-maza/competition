@@ -14,6 +14,7 @@
  */
 #define PS4_OPERATION_FORK_LIFT_HPP
 
+#include <Arduino.h>
 #include <ssr/SyncServo.hpp>
 #include <ssr/PS4Value.hpp>
 #include <ssr/PS4Operation.hpp>
