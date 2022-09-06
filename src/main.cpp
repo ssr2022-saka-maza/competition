@@ -6,6 +6,7 @@
 #include <ps4operation/LowerBody.hpp>
 #include <ps4operation/ForkLift.hpp>
 #include <ps4operation/Hand.hpp>
+#include <ps4operation/Reloader.hpp>
 
 #ifdef use_bluetooth
 #warning build in bluetooth
@@ -14,7 +15,7 @@ ssr::PS4Controller_Bluetooth ps4Controller(true);
 ssr::PS4Controller_USB ps4Controller{};
 #endif /* bluetooth */
 
-ssr::SyncServo liftServo{}, handServo{};
+ssr::SyncServo liftServo{}, handServo{}, reloadServo{};
 ps4operation::Solenoid * solenoid = nullptr;
 
 void setup() {
@@ -43,6 +44,11 @@ void setup() {
     handServo.attach(27, 29);
     hand->begin();
     ps4Controller.addOperation(hand);
+    /* reloader */
+    ps4operation::Reloader * reloader = new ps4operation::Reloader(reloadServo, 0, 150);
+    reloadServo.attach(31, 33);
+    reloader->begin();
+    ps4Controller.addOperation(reloader);
     /* end of setup */
     Serial.println(F("start"));
 }
