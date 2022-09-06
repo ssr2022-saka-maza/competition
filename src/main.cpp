@@ -5,6 +5,7 @@
 #include <ps4operation/Solenoid.hpp>
 #include <ps4operation/LowerBody.hpp>
 #include <ps4operation/ForkLift.hpp>
+#include <ps4operation/Hand.hpp>
 
 #ifdef use_bluetooth
 #warning build in bluetooth
@@ -13,7 +14,7 @@ ssr::PS4Controller_Bluetooth ps4Controller(true);
 ssr::PS4Controller_USB ps4Controller{};
 #endif /* bluetooth */
 
-ssr::SyncServo syncServo{};
+ssr::SyncServo liftServo{}, handServo{};
 ps4operation::Solenoid * solenoid = nullptr;
 
 void setup() {
@@ -33,10 +34,15 @@ void setup() {
     // lowerBody->begin();
     // ps4Controller.addOperation(lowerBody);
     /* fork lift */
-    ps4operation::ForkLift * forkLift = new ps4operation::ForkLift(syncServo);
-    syncServo.attach(23, 25);
+    ps4operation::ForkLift * forkLift = new ps4operation::ForkLift(liftServo);
+    liftServo.attach(23, 25);
     forkLift->begin(90);
     ps4Controller.addOperation(forkLift);
+    /* hand */
+    ps4operation::Hand * hand = new ps4operation::Hand(handServo, 60, 120);
+    handServo.attach(27, 29);
+    hand->begin();
+    ps4Controller.addOperation(hand);
     /* end of setup */
     Serial.println(F("start"));
 }
