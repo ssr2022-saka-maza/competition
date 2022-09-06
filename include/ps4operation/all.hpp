@@ -24,5 +24,8 @@ namespace ps4operation {}
 #include "ps4operation/Servo.hpp"
 #include "ps4operation/SingleMotor.hpp"
 #include "ps4operation/Solenoid.hpp"
+#include "ps4operation/ForkLift.hpp"
+#include "ps4operation/Hand.hpp"
+#include "ps4operation/Reloader.hpp"
 
 #endif /* PS4_OPERATION_ALL_HPP */
