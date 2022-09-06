@@ -16,8 +16,10 @@ void ps4operation::Solenoid::update() {
 
 void ps4operation::Solenoid::operate(const ssr::PS4Value & value) {
     if (!value.circle) return;
-    Serial.println(F("fire"));
     _solenoid.fire();
     _lastFireTime = millis();
     _fired = true;
+    #ifdef ps4operation_verbose
+    Serial.println(F("fire"));
+    #endif /* ps4operation_verbose */
 }

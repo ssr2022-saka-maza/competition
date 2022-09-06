@@ -7,9 +7,9 @@
 
 #include "ps4operation/LowerBody.hpp"
 
-int16_t ps4operation::LowerBody::_mapPower(uint8_t v)  {
+float ps4operation::LowerBody::_mapPower(uint8_t v)  {
     int16_t trans = v - 128;
-    return abs(trans) <= 8 ? 0 : trans * 2;
+    return abs(trans) <= 8 ? 0 : trans * _sqrt2;
 }
 
 ps4operation::LowerBody::LowerBody(
@@ -23,8 +23,23 @@ void ps4operation::LowerBody::begin() {
 }
 
 void ps4operation::LowerBody::operate(const ssr::PS4Value & value) {
-    int16_t x = _mapPower(value.lstick.x);
-    int16_t y = _mapPower(value.lstick.y);
-    int16_t r = _mapPower(value.rstick.x);
-    _lowerBody.twist(x / _sqrt2, y / _sqrt2, r / _sqrt2);
+    float x = _mapPower(value.lstick.x);
+    float y = _mapPower(value.lstick.y);
+    float r = _mapPower(value.rstick.x);
+    #ifdef ps4operation_verbose
+    char buffer[256] = "";
+    char * ptr = buffer;
+    ptr += snprintf_P(ptr, 200, PSTR("[ps4operation::LowerBody] twist "));
+    dtostrf(x, 6, 2, ptr); ptr += 6;
+    ptr[0] = ','; ptr[1] = ' '; ptr += 2;
+    dtostrf(y, 6, 2, ptr); ptr += 6;
+    ptr[0] = ','; ptr[1] = ' '; ptr += 2;
+    dtostrf(r, 6, 2, ptr); ptr += 6;
+    Serial.println(buffer);
+    #define SSR_VERBOSE
+    #endif /* ps4operation_verbose */
+    _lowerBody.twist(x, y, r);
+    #ifdef ps4operation_verbose
+    #undef SSR_VERBOSE
+    #endif /* ps4operation_verbose */
 }

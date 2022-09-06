@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <Arduino.h>
 #include <ssr/LowerBody.hpp>
 #include <ssr/PS4Operation.hpp>
 
@@ -34,7 +35,7 @@ namespace ps4operation {
          * @param v センサー値 0~255
          * @return constexpr int16_t 適した出力パワー
          */
-        static int16_t _mapPower(uint8_t v);
+        static float _mapPower(uint8_t v);
 
     public:
         /**
