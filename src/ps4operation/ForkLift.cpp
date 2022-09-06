@@ -20,7 +20,7 @@ void ps4operation::ForkLift::operate(const ssr::PS4Value & value) {
     char buffer[256] = "";
     char * ptr = buffer;
     ptr += snprintf_P(ptr, 200, PSTR("[ps4operation::ForkLift] current angle is "));
-    ptr += dtostrf(_angle, 6, 2, ptr);
+    dtostrf(_angle, 6, 2, ptr);
     Serial.println(buffer);
     #endif /* ps4operation_verbose */
 }
