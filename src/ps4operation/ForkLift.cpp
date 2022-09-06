@@ -1,7 +1,7 @@
 #include "ps4operation/ForkLift.hpp"
 
 ps4operation::ForkLift::ForkLift(ssr::SyncServo & syncServo)
-: _syncServo(syncServo), _angle(0) {}
+: PS4Operation(), _syncServo(syncServo), _angle(0) {}
 
 void ps4operation::ForkLift::begin(uint8_t angle) {
     _angle = angle;

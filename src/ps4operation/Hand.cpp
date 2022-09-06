@@ -1,7 +1,7 @@
 #include "ps4operation/Hand.hpp"
 
 ps4operation::Hand::Hand(ssr::SyncServo & syncServo, uint8_t minAngle, uint8_t maxAngle)
-: _syncServo(syncServo), _minAngle(minAngle), _maxAngle(maxAngle), _angle(0) {}
+: PS4Operation(), _syncServo(syncServo), _minAngle(minAngle), _maxAngle(maxAngle), _angle(0) {}
 
 void ps4operation::Hand::begin(uint8_t angle) {
     _angle = max(_maxAngle, min(_minAngle, uint8_t(angle)));

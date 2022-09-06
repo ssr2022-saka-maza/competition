@@ -1,7 +1,7 @@
 #include "ps4operation/Reloader.hpp"
 
 ps4operation::Reloader::Reloader(ssr::SyncServo & syncServo, uint8_t minAngle, uint8_t maxAngle)
-: _syncServo(syncServo), _minAngle(minAngle), _maxAngle(maxAngle), _angle(0), _dAngle(0) {}
+: PS4Operation(), _syncServo(syncServo), _minAngle(minAngle), _maxAngle(maxAngle), _angle(0), _dAngle(0) {}
 
 void ps4operation::Reloader::begin(uint8_t angle) {
     _angle = min(_maxAngle, max(_minAngle, angle));

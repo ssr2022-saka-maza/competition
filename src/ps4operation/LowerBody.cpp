@@ -16,7 +16,7 @@ ps4operation::LowerBody::LowerBody(
     ssr::PinType dir1, ssr::PinType pwm1,
     ssr::PinType dir2, ssr::PinType pwm2,
     ssr::PinType dir3, ssr::PinType pwm3
-) : _lowerBody(dir1, pwm1, dir2, pwm2, dir3, pwm3) {}
+) : PS4Operation(), _lowerBody(dir1, pwm1, dir2, pwm2, dir3, pwm3) {}
 
 void ps4operation::LowerBody::begin() {
     _lowerBody.begin();

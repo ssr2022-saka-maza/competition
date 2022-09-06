@@ -9,7 +9,7 @@
 #include "ps4operation/SingleMotor.hpp"
 
 ps4operation::SingleMotor::SingleMotor(ssr::PinType dir, ssr::PinType pwm)
-: _motorDriver(dir, pwm) {}
+: PS4Operation(), _motorDriver(dir, pwm) {}
 
 void ps4operation::SingleMotor::begin(int16_t power) {
     _motorDriver.begin(power);

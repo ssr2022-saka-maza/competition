@@ -8,7 +8,7 @@
 #include "ps4operation/Servo.hpp"
 
 ps4operation::Servo::Servo(::Servo & servo)
-: _servo(servo), _angle(0) {}
+: PS4Operation(), _servo(servo), _angle(0) {}
 
 void ps4operation::Servo::operate(const ssr::PS4Value & value) {
     float v = -value.l2 / 768.0 + value.r2 / 768.0;
