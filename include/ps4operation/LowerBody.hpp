@@ -7,6 +7,13 @@
 
 #pragma once
 
+#ifndef PS4_OPERATION_LOWER_BODY_HPP
+
+/**
+ * @brief ps4operation/LowerBody.hppがインクルードされていることを示すdefine
+ */
+#define PS4_OPERATION_LOWER_BODY_HPP
+
 #include <Arduino.h>
 #include <ssr/LowerBody.hpp>
 #include <ssr/PS4Operation.hpp>
@@ -28,7 +35,7 @@ namespace ps4operation {
         /**
          * @brief ルート２
          */
-        static constexpr float _sqrt2 = float(2);
+        static const float _sqrt2;
 
         /**
          * @brief センサー値からパワーの出力に適した値に変換する
@@ -65,3 +72,5 @@ namespace ps4operation {
         virtual void operate(const ssr::PS4Value & value) override;
     }; // class LowerBody
 } // ps4operation
+
+#endif /* PS4_OPERATION_LOWER_BODY_HPP */

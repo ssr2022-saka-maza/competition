@@ -7,9 +7,11 @@
 
 #include "ps4operation/LowerBody.hpp"
 
+const float ps4operation::LowerBody::_sqrt2 = sqrtf(2.0f);
+
 float ps4operation::LowerBody::_mapPower(uint8_t v)  {
     int16_t trans = v - 128;
-    return abs(trans) <= 8 ? 0 : trans * _sqrt2;
+    return abs(trans) <= 8 ? 0 : float(trans) * _sqrt2;
 }
 
 ps4operation::LowerBody::LowerBody(
@@ -23,9 +25,9 @@ void ps4operation::LowerBody::begin() {
 }
 
 void ps4operation::LowerBody::operate(const ssr::PS4Value & value) {
-    float x = _mapPower(value.lstick.x);
-    float y = _mapPower(value.lstick.y);
-    float r = _mapPower(value.rstick.x);
+    float x = _mapPower(value.lstick.y);
+    float y = _mapPower(value.lstick.x);
+    float r = -_mapPower(value.rstick.x);
     #ifdef ps4operation_verbose
     char buffer[256] = "";
     char * ptr = buffer;
@@ -36,10 +38,16 @@ void ps4operation::LowerBody::operate(const ssr::PS4Value & value) {
     ptr[0] = ','; ptr[1] = ' '; ptr += 2;
     dtostrf(r, 6, 2, ptr); ptr += 6;
     Serial.println(buffer);
+    #ifndef SSR_VERBOSE
+    #define ndef_SSR_VERBOSE
     #define SSR_VERBOSE
+    #endif /* SSR_VERBOSE */
     #endif /* ps4operation_verbose */
     _lowerBody.twist(x, y, r);
     #ifdef ps4operation_verbose
+    #ifdef ndef_SSR_VERBOSE
     #undef SSR_VERBOSE
+    #undef ndef_SSR_VERBOSE
+    #endif /* ndef_SSR_VERBOSE */
     #endif /* ps4operation_verbose */
 }
