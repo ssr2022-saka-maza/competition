@@ -19,7 +19,7 @@ private:
     // 発射したフラグ 発射直後はtrue
     bool _fired;
     // パルス幅 単位はms
-    const uint8_t _duration;
+    const uint16_t _duration;
 
 public:
     /**
@@ -27,7 +27,7 @@ public:
      * @param pin ssr::PinType ソレノイドを繋げたピン
      * @param duration uint8_t パルス幅 単位はms デフォルトは50
      */
-    Solenoid(ssr::PinType pin, uint8_t duration = 50);
+    Solenoid(ssr::PinType pin, uint16_t duration = 50);
 
     /**
      * @brief ソレノイドのセットアップ
