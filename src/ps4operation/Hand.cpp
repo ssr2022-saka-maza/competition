@@ -10,8 +10,9 @@ void ps4operation::Hand::begin(uint8_t angle) {
 }
 
 void ps4operation::Hand::operate(const ssr::PS4Value & value) {
-    _angle += (value.l1 - value.r1) / float(_maxAngle - _minAngle);
-    _angle = max(_maxAngle, min(_minAngle, _angle));
+    // _angle += (value.l1 - value.r1) / float(_maxAngle - _minAngle);
+    _angle += (value.l1 - value.r1) / 3.0;
+    _angle = max(_minAngle, min(_maxAngle, _angle));
     _syncServo.write(uint8_t(_angle));
     #ifdef ps4operation_verbose
     char buffer[256] = "";
