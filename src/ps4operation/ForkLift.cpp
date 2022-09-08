@@ -10,11 +10,8 @@ void ps4operation::ForkLift::begin(uint8_t angle) {
 }
 
 void ps4operation::ForkLift::operate(const ssr::PS4Value & value) {
-    _angle += value.up / 3.0 - value.down / 3.0;
-    _angle =
-        _angle <=   0 ?   0 :
-        _angle >= 180 ? 180 :
-        _angle;
+    _angle += (value.up - value.down);
+    _angle = max(0, min(180, _angle));
     _syncServo.write(int(_angle));
     #ifdef ps4operation_verbose
     char buffer[256] = "";
