@@ -22,6 +22,9 @@
  * @brief ssr::PS4Operationを継承したクラス群
  */
 namespace ps4operation {
+    /**
+     * @brief 把持機構を扱うOperation
+     */
     class Reloader : public ssr::PS4Operation {
     private:
         /**
@@ -75,7 +78,7 @@ namespace ps4operation {
          * @details 三角ボタンで装填、バツボタンで戻る
          */
         virtual void operate(const ssr::PS4Value & value) override;
-    };
+    }; // class Reloader
 } // namespace ps4operation
 
 #endif /* PS4_OPERATION_RELOADER_HPP */

@@ -22,6 +22,9 @@
  * @brief ssr::PS4Operationを継承したクラス群
  */
 namespace ps4operation {
+    /**
+     * @brief 把持機構を扱うOperation
+     */
     class Hand : public ssr::PS4Operation {
     private:
         /**
@@ -70,7 +73,7 @@ namespace ps4operation {
          * @details L1ボタンで開く、R2ボタンで閉じる
          */
         virtual void operate(const ssr::PS4Value & value) override;
-    };
+    }; // class Hand
 } // namespace ps4operation
 
 #endif /* PS4_OPERATION_HAND_HPP */
