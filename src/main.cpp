@@ -11,9 +11,9 @@
 #ifdef use_bluetooth
 #warning build in bluetooth
 ssr::PS4Controller_Bluetooth ps4Controller(true);
-#else /* bluetooth */
+#else /* use_bluetooth */
 ssr::PS4Controller_USB ps4Controller{};
-#endif /* bluetooth */
+#endif /* use_bluetooth */
 
 ssr::SyncServo liftServo{}, handServo{}, reloadServo{};
 ps4operation::Solenoid * solenoid = nullptr;
@@ -27,20 +27,20 @@ void setup() {
     /* log */
     // ps4Controller.addOperation(new ps4operation::Log());
     /* solenoid */
-    solenoid = new ps4operation::Solenoid(A8, 100);
+    solenoid = new ps4operation::Solenoid(A8, 1000);
     solenoid->begin();
     ps4Controller.addOperation(solenoid);
-    /* lowerbody */
-    // ps4operation::LowerBody * lowerBody = new ps4operation::LowerBody(6, 7, 4, 5, 2, 3);
-    // lowerBody->begin();
-    // ps4Controller.addOperation(lowerBody);
+    /* lower body */
+    ps4operation::LowerBody * lowerBody = new ps4operation::LowerBody(6, 7, 4, 5, 2, 3);
+    lowerBody->begin();
+    ps4Controller.addOperation(lowerBody);
     /* fork lift */
     ps4operation::ForkLift * forkLift = new ps4operation::ForkLift(liftServo);
     liftServo.attach(23, 25);
     forkLift->begin(90);
     ps4Controller.addOperation(forkLift);
     /* hand */
-    ps4operation::Hand * hand = new ps4operation::Hand(handServo, 60, 120);
+    ps4operation::Hand * hand = new ps4operation::Hand(handServo, 70, 120);
     handServo.attach(27, 29);
     hand->begin();
     ps4Controller.addOperation(hand);
