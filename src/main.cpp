@@ -3,7 +3,8 @@
 #include <ssr/PS4Controller.hpp>
 #include <ps4operation/Log.hpp>
 #include <ps4operation/Solenoid.hpp>
-#include <ps4operation/LowerBody.hpp>
+// #include <ps4operation/LowerBody.hpp>
+#include <ps4operation/LowerBody_MovAve.hpp>
 #include <ps4operation/ForkLift.hpp>
 #include <ps4operation/Hand.hpp>
 #include <ps4operation/Reloader.hpp>
@@ -31,7 +32,8 @@ void setup() {
     solenoid->begin();
     ps4Controller.addOperation(solenoid);
     /* lower body */
-    ps4operation::LowerBody * lowerBody = new ps4operation::LowerBody(6, 7, 4, 5, 2, 3);
+    // ps4operation::LowerBody * lowerBody = new ps4operation::LowerBody(6, 7, 4, 5, 2, 3);
+    ps4operation::LowerBody_MovAve * lowerBody = new ps4operation::LowerBody_MovAve(6, 7, 4, 5, 2, 3);
     lowerBody->begin();
     ps4Controller.addOperation(lowerBody);
     /* fork lift */
