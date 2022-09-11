@@ -51,6 +51,11 @@ void setup() {
     reloadServo.attach(31, 33);
     reloader->begin();
     ps4Controller.addOperation(reloader);
+    /* PWM frequency */
+    // pin:   7, 5, 3
+    // timer: 4, 3, 3
+    TCCR3B = (TCCR3B & 0b11111000) | 0x01; // Timer3 31.37255[kHz]
+    TCCR4B = (TCCR4B & 0b11111000) | 0x01; // Timer4 31.37255[kHz]
     /* end of setup */
     Serial.println(F("start"));
 }
