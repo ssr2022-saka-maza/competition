@@ -44,9 +44,18 @@ namespace ps4operation {
     public:
         const uint8_t childCapacity;
 
-        Systemctl(uint8_t childCapacity);
+        explicit Systemctl(uint8_t childCapacity = 16);
 
         ~Systemctl();
+
+        // コピーコンストラクタを禁止
+        Systemctl(const Systemctl &) = delete;
+        // コピー代入演算子を禁止
+        Systemctl & operator=(const Systemctl &) = delete;
+        // ムーブコンストラクタを許可
+        Systemctl(Systemctl &&) = default;
+        // ムーブ代入演算子を許可
+        Systemctl & operator=(Systemctl &&) = default;
 
         void reset() noexcept override;
 
