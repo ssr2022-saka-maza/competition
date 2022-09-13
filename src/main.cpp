@@ -8,6 +8,7 @@
 #include <ps4operation/ForkLift.hpp>
 #include <ps4operation/Hand.hpp>
 #include <ps4operation/Reloader.hpp>
+#include <ps4operation/Systemctl.hpp>
 
 #ifdef use_bluetooth
 #warning build in bluetooth
@@ -25,37 +26,40 @@ void setup() {
         Serial.println(F("failed to initialize"));
         while (1);
     }
+    /* PWM frequency */
+    // pin:   7, 5, 3
+    // timer: 4, 3, 3
+    TCCR3B = (TCCR3B & 0b11111000) | 0x02; // Timer3 3.92116[kHz]
+    TCCR4B = (TCCR4B & 0b11111000) | 0x02; // Timer4 3.92116[kHz]
     /* log */
     // ps4Controller.addOperation(new ps4operation::Log());
+    /* systemctl */
+    ps4operation::Systemctl * systemctl = new ps4operation::Systemctl();
+    ps4Controller.addOperation(systemctl);
     /* solenoid */
-    solenoid = new ps4operation::Solenoid(A8, 1000);
+    solenoid = new ps4operation::Solenoid(A8, 100);
     solenoid->begin();
-    ps4Controller.addOperation(solenoid);
+    systemctl->addChild(solenoid);
     /* lower body */
     // ps4operation::LowerBody * lowerBody = new ps4operation::LowerBody(6, 7, 4, 5, 2, 3);
     ps4operation::LowerBody_MovAve * lowerBody = new ps4operation::LowerBody_MovAve(6, 7, 4, 5, 2, 3);
     lowerBody->begin();
-    ps4Controller.addOperation(lowerBody);
+    systemctl->addChild(lowerBody);
     /* fork lift */
     ps4operation::ForkLift * forkLift = new ps4operation::ForkLift(liftServo);
     liftServo.attach(23, 25);
     forkLift->begin(90);
-    ps4Controller.addOperation(forkLift);
+    systemctl->addChild(forkLift);
     /* hand */
     ps4operation::Hand * hand = new ps4operation::Hand(handServo, 70, 120);
     handServo.attach(27, 29);
     hand->begin();
-    ps4Controller.addOperation(hand);
+    systemctl->addChild(hand);
     /* reloader */
     ps4operation::Reloader * reloader = new ps4operation::Reloader(reloadServo, 0, 150);
     reloadServo.attach(31, 33);
     reloader->begin();
-    ps4Controller.addOperation(reloader);
-    /* PWM frequency */
-    // pin:   7, 5, 3
-    // timer: 4, 3, 3
-    TCCR3B = (TCCR3B & 0b11111000) | 0x01; // Timer3 31.37255[kHz]
-    TCCR4B = (TCCR4B & 0b11111000) | 0x01; // Timer4 31.37255[kHz]
+    systemctl->addChild(reloader);
     /* end of setup */
     Serial.println(F("start"));
 }
