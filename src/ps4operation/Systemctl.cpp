@@ -77,6 +77,23 @@ void ps4operation::Systemctl::operate(const ssr::PS4Value & value) noexcept {
             break;
     }
     if (newState != _state) {
+        #ifdef ps4operation_verbose
+        char buffer[256] = "";
+        char * ptr = buffer;
+        ptr += snprintf_P(ptr, 40, PSTR("[ps4operation::Systemctl] new state: "));
+        switch (newState) {
+            case State::start:
+                ptr += snprintf_P(ptr, 10, PSTR("start"));
+                break;
+            case State::stop:
+                ptr += snprintf_P(ptr, 10, PSTR("stop"));
+                break;
+            case State::automate:
+                ptr += snprintf_P(ptr, 10, PSTR("automate"));
+                break;
+        }
+        Serial.println(buffer);
+        #endif /* ps4operation_verbose */
         _stateUpdateTime = millis();
         _state = newState;
     }
