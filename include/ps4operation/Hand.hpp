@@ -17,6 +17,7 @@
 #include <Arduino.h>
 #include <ssr/SyncServo.hpp>
 #include <ssr/PS4Operation.hpp>
+#include <ps4operation/Resetable.hpp>
 
 /**
  * @brief ssr::PS4Operationを継承したクラス群
@@ -25,7 +26,7 @@ namespace ps4operation {
     /**
      * @brief 把持機構を扱うOperation
      */
-    class Hand : public ssr::PS4Operation {
+    class Hand : public ps4operation::Resetable {
     private:
         /**
          * @brief 制御する同期サーボ
@@ -73,6 +74,11 @@ namespace ps4operation {
          * @details L1ボタンで開く、R2ボタンで閉じる
          */
         virtual void operate(const ssr::PS4Value & value) override;
+
+        /**
+         * @brief ハンドを閉じる
+         */
+        virtual void reset() override;
     }; // class Hand
 } // namespace ps4operation
 

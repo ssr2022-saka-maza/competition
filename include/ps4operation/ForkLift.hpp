@@ -18,6 +18,7 @@
 #include <ssr/SyncServo.hpp>
 #include <ssr/PS4Value.hpp>
 #include <ssr/PS4Operation.hpp>
+#include <ps4operation/Resetable.hpp>
 
 /**
  * @brief ssr::PS4Operationを継承したクラス群
@@ -26,7 +27,7 @@ namespace ps4operation {
     /**
      * @brief 昇降機構を扱うOperation
      */
-    class ForkLift : public ssr::PS4Operation {
+    class ForkLift : public ps4operation::Resetable {
     private:
         /**
          * @brief 制御する同期サーボ
@@ -62,6 +63,11 @@ namespace ps4operation {
          * @details 上ボタンで上昇、下ボタンで下降
          */
         virtual void operate(const ssr::PS4Value & value) override;
+
+        /**
+         * @brief リセット
+         */
+        virtual void reset() override;
     }; // class ForkLift
 } // namespace ps4operation
 

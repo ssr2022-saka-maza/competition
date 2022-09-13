@@ -17,6 +17,7 @@
 
 #include <ssr/PS4Operation.hpp>
 #include <ssr/Solenoid.hpp>
+#include <ps4operation/Resetable.hpp>
 
 /**
  * @brief ssr::PS4Operationを継承したクラス群
@@ -25,7 +26,7 @@ namespace ps4operation {
     /**
      * @brief ソレノイドの用のPS4Operation
      */
-    class Solenoid : public ssr::PS4Operation {
+    class Solenoid : public ps4operation::Resetable {
     private:
         /**
          * @brief 扱うソレノイド
@@ -73,6 +74,11 @@ namespace ps4operation {
          * @note 丸ボタンで発火する設定になってる 現在
          */
         virtual void operate(const ssr::PS4Value & value) override;
+
+        /**
+         * @brief リセット
+         */
+        virtual void reset() override;
     }; // class Solenoid
 } // namespace ps4operator
 

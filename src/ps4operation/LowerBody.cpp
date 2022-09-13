@@ -18,7 +18,7 @@ ps4operation::LowerBody::LowerBody(
     ssr::PinType dir1, ssr::PinType pwm1,
     ssr::PinType dir2, ssr::PinType pwm2,
     ssr::PinType dir3, ssr::PinType pwm3
-) : PS4Operation(), _lowerBody(dir1, pwm1, dir2, pwm2, dir3, pwm3) {}
+) : Resetable(), _lowerBody(dir1, pwm1, dir2, pwm2, dir3, pwm3) {}
 
 void ps4operation::LowerBody::begin() {
     _lowerBody.begin();
@@ -50,4 +50,8 @@ void ps4operation::LowerBody::operate(const ssr::PS4Value & value) {
     #undef ndef_SSR_VERBOSE
     #endif /* ndef_SSR_VERBOSE */
     #endif /* ps4operation_verbose */
+}
+
+void ps4operation::LowerBody::reset() {
+    _lowerBody.twist(0, 0, 0);
 }

@@ -19,6 +19,7 @@
 #include <ssr/MovingAverage.hpp>
 #include <ssr/LowerBody.hpp>
 #include <ssr/PS4Operation.hpp>
+#include <ps4operation/Resetable.hpp>
 
 /**
  * @brief ssr::PS4Operationを継承したクラス群
@@ -27,7 +28,7 @@ namespace ps4operation {
     /**
      * @brief 足回りを操作するPS4Operation
      */
-    class LowerBody_MovAve : public ssr::PS4Operation {
+    class LowerBody_MovAve : public ps4operation::Resetable {
     private:
         /**
          * @brief 扱う足回り
@@ -70,11 +71,13 @@ namespace ps4operation {
          * @param pwm2 モーター2のPWMピン
          * @param dir3 モーター3のDIRピン
          * @param pwm3 モーター3のPWMピン
+         * @param movAveCount 移動平均のサンプル数
          */
         LowerBody_MovAve(
             ssr::PinType dir1, ssr::PinType pwm1,
             ssr::PinType dir2, ssr::PinType pwm2,
-            ssr::PinType dir3, ssr::PinType pwm3
+            ssr::PinType dir3, ssr::PinType pwm3,
+            uint8_t movAveCount = 128
         );
 
         /**
@@ -87,6 +90,11 @@ namespace ps4operation {
          * @param value コントローラーのセンサー値
          */
         virtual void operate(const ssr::PS4Value & value) override;
+
+        /**
+         * @brief 足回りを停止する
+         */
+        virtual void reset() override;
     }; // class LowerBody_MovAve
 } // namespace ps4operation
 

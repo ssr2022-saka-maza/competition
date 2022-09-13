@@ -1,7 +1,7 @@
 #include "ps4operation/Reloader.hpp"
 
 ps4operation::Reloader::Reloader(ssr::SyncServo & syncServo, uint8_t minAngle, uint8_t maxAngle)
-: PS4Operation(), _syncServo(syncServo), _minAngle(minAngle), _maxAngle(maxAngle), _angle(0), _dAngle(0) {}
+: Resetable(), _syncServo(syncServo), _minAngle(minAngle), _maxAngle(maxAngle), _angle(0), _dAngle(0) {}
 
 void ps4operation::Reloader::begin(uint8_t angle) {
     _angle = min(_maxAngle, max(_minAngle, angle));
@@ -22,4 +22,9 @@ void ps4operation::Reloader::operate(const ssr::PS4Value & value) {
     dtostrf(_angle, 6, 2, ptr);
     Serial.println(buffer);
     #endif /* ps4operation_verbose */
+}
+
+void ps4operation::Reloader::reset() {
+    _angle = max(_minAngle, min(_maxAngle, _angle - 1));
+    _syncServo.write(uint8_t(_angle));
 }

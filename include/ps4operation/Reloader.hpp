@@ -17,6 +17,7 @@
 #include <Arduino.h>
 #include <ssr/SyncServo.hpp>
 #include <ssr/PS4Operation.hpp>
+#include <ps4operation/Resetable.hpp>
 
 /**
  * @brief ssr::PS4Operationを継承したクラス群
@@ -25,7 +26,7 @@ namespace ps4operation {
     /**
      * @brief 把持機構を扱うOperation
      */
-    class Reloader : public ssr::PS4Operation {
+    class Reloader : public ps4operation::Resetable {
     private:
         /**
          * @brief 制御する同期サーボ
@@ -78,6 +79,11 @@ namespace ps4operation {
          * @details 三角ボタンで装填、バツボタンで戻る
          */
         virtual void operate(const ssr::PS4Value & value) override;
+
+        /**
+         * @brief 装填をリセット
+         */
+        virtual void reset() override;
     }; // class Reloader
 } // namespace ps4operation
 

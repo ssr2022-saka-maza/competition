@@ -17,6 +17,7 @@
 #include <Arduino.h>
 #include <ssr/LowerBody.hpp>
 #include <ssr/PS4Operation.hpp>
+#include <ps4operation/Resetable.hpp>
 
 /**
  * @brief ssr::PS4Operationを継承したクラス群
@@ -25,7 +26,7 @@ namespace ps4operation {
     /**
      * @brief 足回りを操作するPS4Operation
      */
-    class LowerBody : public ssr::PS4Operation {
+    class LowerBody : public ps4operation::Resetable {
     private:
         /**
          * @brief 扱う足回り
@@ -70,6 +71,11 @@ namespace ps4operation {
          * @param value コントローラーのセンサー値
          */
         virtual void operate(const ssr::PS4Value & value) override;
+
+        /**
+         * @brief 足回りを停止する
+         */
+        virtual void reset() override;
     }; // class LowerBody
 } // ps4operation
 
