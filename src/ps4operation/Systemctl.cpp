@@ -1,7 +1,7 @@
 #include "ps4operation/Systemctl.hpp"
 
 ps4operation::Systemctl::Systemctl(uint8_t childCapacity)
-: _childCount(0), _children(nullptr), _state(State::start), _lastValue(), _stateUpdateTime(0), childCapacity(childCapacity) {
+: _childCount(0), _children(nullptr), _state(State::moving), _lastValue(), _stateUpdateTime(0), childCapacity(childCapacity) {
     _children = new Resetable*[this->childCapacity];
     for (uint8_t i = 0; i < this->childCapacity; ++i) {
         _children[i] = nullptr;
@@ -42,7 +42,7 @@ void ps4operation::Systemctl::operate(const ssr::PS4Value & value) noexcept {
     bool otherwise = _lastValue != value;
     State newState = _state;
     switch (_state) {
-        case State::start:
+        case State::moving:
             if (ps) {
                 newState = State::stop;
                 _lastValue = value;
@@ -50,7 +50,7 @@ void ps4operation::Systemctl::operate(const ssr::PS4Value & value) noexcept {
                 newState = State::automate;
                 _lastValue = value;
             } else if (otherwise) {
-                newState = State::start;
+                newState = State::moving;
             }
             break;
         case State::stop:
@@ -61,7 +61,7 @@ void ps4operation::Systemctl::operate(const ssr::PS4Value & value) noexcept {
                 newState = State::automate;
                 _lastValue = value;
             } else if (otherwise) {
-                newState = State::start;
+                newState = State::moving;
             }
             break;
         case State::automate:
@@ -72,7 +72,7 @@ void ps4operation::Systemctl::operate(const ssr::PS4Value & value) noexcept {
                 newState = State::automate;
                 _lastValue = value;
             } else if (otherwise) {
-                newState = State::start;
+                newState = State::moving;
             }
             break;
     }
@@ -82,8 +82,8 @@ void ps4operation::Systemctl::operate(const ssr::PS4Value & value) noexcept {
         char * ptr = buffer;
         ptr += snprintf_P(ptr, 40, PSTR("[ps4operation::Systemctl] new state: "));
         switch (newState) {
-            case State::start:
-                ptr += snprintf_P(ptr, 10, PSTR("start"));
+            case State::moving:
+                ptr += snprintf_P(ptr, 10, PSTR("moving"));
                 break;
             case State::stop:
                 ptr += snprintf_P(ptr, 10, PSTR("stop"));
@@ -98,7 +98,7 @@ void ps4operation::Systemctl::operate(const ssr::PS4Value & value) noexcept {
         _state = newState;
     }
     switch (_state) {
-        case State::start:
+        case State::moving:
             for (uint8_t i = 0; i < _childCount; ++i) {
                 _children[i]->operate(value);
             }
