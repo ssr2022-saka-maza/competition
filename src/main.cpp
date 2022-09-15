@@ -48,17 +48,17 @@ void setup() {
     /* fork lift */
     ps4operation::ForkLift * forkLift = new ps4operation::ForkLift(liftServo);
     liftServo.attach(23, 25);
-    forkLift->begin(90);
+    forkLift->begin(0);
     systemctl->addChild(forkLift);
     /* hand */
     ps4operation::Hand * hand = new ps4operation::Hand(handServo, 70, 120);
     handServo.attach(27, 29);
-    hand->begin();
+    hand->begin(80);
     systemctl->addChild(hand);
     /* reloader */
     ps4operation::Reloader * reloader = new ps4operation::Reloader(reloadServo, 0, 150);
     reloadServo.attach(31, 33);
-    reloader->begin();
+    reloader->begin(150);
     systemctl->addChild(reloader);
     /* end of setup */
     Serial.println(F("start"));
